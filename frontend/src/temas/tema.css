@@ -1,0 +1,64 @@
+/*
+  Tema CSS moderno e responsivo para o site de correção de testes neuropsicológicos.
+  Utiliza CSS custom properties (variáveis) para fácil manutenção e troca de tema.
+  Cores baseadas na paleta fornecida pelo cliente.
+*/
+
+:root {
+  /* Cores principais */
+  --cor-lilas: #9B5DE5;
+  --cor-roxo-escuro: #5F2A87;
+  --cor-azul-claro: #4FC3F7;
+  --cor-verde-menta: #43E6B0;
+  --cor-amarelo-suave: #FFE066;
+  --cor-rosa-claro: #F7B2BD;
+
+  /* Neutros - tema claro */
+  --cor-fundo-claro: #F8F9FA;
+  --cor-texto-claro: #22223B;
+  --cor-cinza-claro: #E0E0E0;
+
+  /* Neutros - tema escuro */
+  --cor-fundo-escuro: #22223B;
+  --cor-texto-escuro: #F8F9FA;
+  --cor-cinza-escuro: #39375B;
+
+  /* Outras configurações */
+  --raio-borda: 8px;
+  --espaco: 1rem;
+  --transicao: 0.2s;
+}
+
+body {
+  background: var(--cor-fundo-claro);
+  color: var(--cor-texto-claro);
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  transition: background var(--transicao), color var(--transicao);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: var(--cor-fundo-escuro);
+    color: var(--cor-texto-escuro);
+  }
+}
+
+.container {
+  max-width: 480px;
+  margin: 2rem auto;
+  padding: var(--espaco);
+  background: white;
+  border-radius: var(--raio-borda);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+}
+
+@media (max-width: 600px) {
+  .container {
+    max-width: 98vw;
+    margin: 1rem;
+    padding: 0.5rem;
+  }
+}

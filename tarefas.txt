@@ -1,0 +1,41 @@
+# Plano de Ação - Projeto de Correção de Testes Neuropsicológicos
+
+## 1. Estruturação do Projeto
+- [x] Definir arquitetura escalável (Java + Spring Boot, React, AWS)
+- [x] Criar plano de tarefas (este arquivo)
+
+## 2. Backend (Java + Spring Boot)
+- [ ] Estruturar projeto em camadas (controller, service, repository, model)
+- [ ] Implementar autenticação (integração futura com AWS Cognito)
+- [ ] Criar endpoints:
+    - [ ] /api/publico/sobre (informações do site)
+    - [ ] /api/auth/cadastro
+    - [ ] /api/auth/login
+    - [ ] /api/auth/esqueci-senha
+- [ ] Documentar API (Swagger/OpenAPI)
+- [ ] Configurar CORS para integração com frontend
+
+## 3. Frontend (React)
+- [ ] Criar estrutura de pastas organizada (componentes, páginas, serviços)
+- [ ] Implementar rotas:
+    - [ ] / (Home - sobre o site)
+    - [ ] /login
+    - [ ] /cadastro
+    - [ ] /esqueci-senha
+- [ ] Criar componentes reutilizáveis (inputs, botões, etc.)
+- [ ] Integrar com backend (consumir APIs)
+- [ ] Layout responsivo e acessível
+
+## 4. Integração com AWS
+- [ ] Configurar AWS Cognito para autenticação
+- [ ] Preparar ambiente para deploy (Elastic Beanstalk/ECS para backend, S3/CloudFront para frontend)
+
+## 5. Boas Práticas
+- [ ] Comentar código extensivamente
+- [ ] Escrever README detalhado
+- [ ] Adotar versionamento semântico
+- [ ] Configurar CI/CD (futuramente)
+
+---
+
+> Atualize este arquivo conforme as tarefas forem concluídas. Siga as melhores práticas e mantenha o código limpo e bem documentado.
