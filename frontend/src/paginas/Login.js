@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import '../temas/tema.css';
-import { Auth } from '@aws-amplify/auth';
+import { signIn } from '@aws-amplify/auth';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -15,7 +15,7 @@ function Login() {
     setMensagem('');
     setErro(false);
     try {
-      const user = await Auth.signIn(email, senha);
+  const user = await signIn({ username: email, password: senha });
       setMensagem('Login realizado com sucesso!');
       setEmail(''); setSenha('');
       // Aqui você pode redirecionar ou salvar o token se desejar
