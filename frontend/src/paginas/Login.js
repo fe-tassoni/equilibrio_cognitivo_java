@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import '../temas/tema.css';
-import { Auth } from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
 
 function Login() {
   const [email, setEmail] = useState('');
