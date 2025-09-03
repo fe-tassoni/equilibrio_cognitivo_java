@@ -17,7 +17,7 @@ export async function getProtegido(token, rota = '/protegido/teste') {
 // Serviço centralizado para chamadas HTTP ao backend Java Spring Boot
 // Altere a URL base conforme o ambiente (desenvolvimento/produção)
 
-const API_BASE = 'http://localhost:8080/api';
+const API_BASE = 'http://equilibrio-cognitivo-dev.us-east-1.elasticbeanstalk.com/api';
 
 /**
  * Faz uma requisição POST para o endpoint de cadastro de usuário.
