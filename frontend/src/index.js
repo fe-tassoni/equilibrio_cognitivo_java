@@ -1,6 +1,5 @@
 import './amplifyConfig';
 
-import { AuthProvider } from 'react-oidc-context';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -11,19 +10,10 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const cognitoAuthConfig = {
-  authority: "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_cBNVK5vov",
-  client_id: "1lj9d5u67tmrjrc3hg30tfb82o",
-  redirect_uri: "http://localhost:3000",
-  response_type: "code",
-  scope: "phone openid email",
-};
 
 root.render(
   <React.StrictMode>
-    <AuthProvider {...cognitoAuthConfig}>
-      <App />
-    </AuthProvider>
+    <App />
   </React.StrictMode>
 );
 
