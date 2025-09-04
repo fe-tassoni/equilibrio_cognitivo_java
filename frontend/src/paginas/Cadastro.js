@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import '../temas/tema.css';
-import { cadastrarUsuario } from '../servicos/api';
+import { signUp } from '@aws-amplify/auth';
 
 function Cadastro() {
   const [nome, setNome] = useState('');
@@ -15,17 +15,18 @@ function Cadastro() {
     setMensagem('');
     setErro(false);
     try {
-      const resposta = await cadastrarUsuario({ nome, email, senha });
-      if (resposta.ok) {
-        setMensagem('Usuário cadastrado com sucesso!');
-        setNome(''); setEmail(''); setSenha('');
-      } else {
-        const texto = await resposta.text();
-        setMensagem(texto || 'Erro ao cadastrar.');
-        setErro(true);
-      }
+      await signUp({
+        username: email,
+        password: senha,
+        attributes: {
+          name: nome,
+          email: email,
+        },
+      });
+      setMensagem('Usuário cadastrado com sucesso! Verifique seu e-mail para confirmação.');
+      setNome(''); setEmail(''); setSenha('');
     } catch (err) {
-      setMensagem('Erro de conexão com o servidor.');
+      setMensagem('Erro ao cadastrar: ' + (err.message || 'Erro desconhecido.'));
       setErro(true);
     }
   };

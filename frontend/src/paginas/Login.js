@@ -18,7 +18,7 @@ function Login() {
   const user = await signIn({ username: email, password: senha });
       setMensagem('Login realizado com sucesso!');
       setEmail(''); setSenha('');
-      // Aqui você pode redirecionar ou salvar o token se desejar
+      // Redirecionamento ou manipulação do token pode ser feito aqui
     } catch (err) {
       if (err.code === 'UserNotConfirmedException') {
         setMensagem('Usuário não confirmado. Verifique seu e-mail ou telefone.');
