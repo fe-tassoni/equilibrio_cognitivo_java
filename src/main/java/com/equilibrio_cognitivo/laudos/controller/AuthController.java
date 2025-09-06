@@ -43,11 +43,12 @@ public class AuthController {
      */
     @PostMapping("/esqueci-senha")
     public ResponseEntity<String> esqueciSenha(@RequestBody Usuario usuario) {
-        // Simulação: apenas verifica se o e-mail existe
-        if (usuarioService.cadastrar(usuario)) {
-            return ResponseEntity.badRequest().body("E-mail não cadastrado.");
-        } else {
+        // Apenas verifica se o e-mail existe
+        boolean existe = usuarioService.emailExiste(usuario.getEmail());
+        if (existe) {
             return ResponseEntity.ok("Instruções de recuperação enviadas para o e-mail.");
+        } else {
+            return ResponseEntity.badRequest().body("E-mail não cadastrado.");
         }
     }
 }

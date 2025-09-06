@@ -33,31 +33,33 @@ function App() {
     };
 
     return (
-      <Authenticator>
-        {({ signOut, user }) => (
-          <Router>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/cadastro" element={<>
             <div className="container mt-5">
-              <nav>
-                <ul>
-                  <li><Link to="/">Home</Link></li>
-                  <li><Link to="/login">Login</Link></li>
-                  <li><Link to="/cadastro">Cadastro</Link></li>
-                  <li><Link to="/esquecisenha">Esqueci Senha</Link></li>
-                  <li><button onClick={signOut}>Sair</button></li>
-                </ul>
-              </nav>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/cadastro" element={<Cadastro />} />
-                <Route path="/esquecisenha" element={<EsqueciSenha />} />
-              </Routes>
-              <button onClick={testarProtegido}>Testar Protegido</button>
-              <div>{protegidoMsg}</div>
+              <Cadastro />
             </div>
-          </Router>
-        )}
-      </Authenticator>
+          </>} />
+          <Route path="/esquecisenha" element={<>
+            <div className="container mt-5">
+              <EsqueciSenha />
+            </div>
+          </>} />
+          {/* Exemplo de rota protegida: */}
+          {/* <Route path="/protegido" element={
+            <Authenticator>
+              {({ signOut, user }) => (
+                <div>
+                  <h2>Área Protegida</h2>
+                  <button onClick={signOut}>Sair</button>
+                </div>
+              )}
+            </Authenticator>
+          } /> */}
+        </Routes>
+        {/* O botão de teste protegido pode ser removido ou movido para rotas protegidas */}
+      </Router>
     );
 }
 

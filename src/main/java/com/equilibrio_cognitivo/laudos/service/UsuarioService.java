@@ -9,6 +9,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UsuarioService {
+    /**
+     * Verifica se o e-mail já está cadastrado.
+     */
+    public boolean emailExiste(String email) {
+        return usuarioRepository.buscarPorEmail(email).isPresent();
+    }
     private final UsuarioRepository usuarioRepository = new UsuarioRepository();
 
     /**
