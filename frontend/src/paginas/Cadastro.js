@@ -4,6 +4,12 @@ import '../temas/tema.css';
 import { signUp } from '@aws-amplify/auth';
 
 function Cadastro() {
+  // Validação de senha forte
+  function senhaEhForte(senha) {
+    // Mínimo 8 caracteres, pelo menos uma maiúscula, uma minúscula, um número e um símbolo
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+    return regex.test(senha);
+  }
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -14,6 +20,11 @@ function Cadastro() {
     e.preventDefault();
     setMensagem('');
     setErro(false);
+    if (!senhaEhForte(senha)) {
+      setMensagem('A senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula, número e símbolo.');
+      setErro(true);
+      return;
+    }
     try {
       await signUp({
         username: email,
@@ -26,7 +37,11 @@ function Cadastro() {
       setMensagem('Usuário cadastrado com sucesso! Verifique seu e-mail para confirmação.');
       setNome(''); setEmail(''); setSenha('');
     } catch (err) {
-      setMensagem('Erro ao cadastrar: ' + (err.message || 'Erro desconhecido.'));
+      if (err.name === 'UsernameExistsException' || (err.message && err.message.includes('User already exists'))) {
+        setMensagem('E-mail já cadastrado');
+      } else {
+        setMensagem('Erro ao cadastrar: ' + (err.message || 'Erro desconhecido.'));
+      }
       setErro(true);
     }
   };
