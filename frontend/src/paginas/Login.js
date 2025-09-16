@@ -1,13 +1,16 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { signIn } from '@aws-amplify/auth';
+import { signIn, getCurrentUser } from '@aws-amplify/auth';
+import ConfirmacaoUsuario from './ConfirmacaoUsuario';
 
 function Login({ onOpenEsqueciSenha, onClose }) {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [mensagem, setMensagem] = useState('');
   const [erro, setErro] = useState(false);
+  const [showConfirmacao, setShowConfirmacao] = useState(false);
+  const [emailParaConfirmar, setEmailParaConfirmar] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,15 +19,19 @@ function Login({ onOpenEsqueciSenha, onClose }) {
     setErro(false);
     try {
       const user = await signIn({ username: email, password: senha });
-      setMensagem('Login realizado com sucesso!');
+      setMensagem('Login realizado com sucesso! Conta confirmada.');
       setEmail(''); setSenha('');
       setTimeout(() => {
         if (onClose) onClose();
-        window.location.reload();
+        navigate('/dashboard');
       }, 500);
     } catch (err) {
+      console.log('Erro detalhado no login:', err);
       if (err.code === 'UserNotConfirmedException') {
-        setMensagem('Usuário não confirmado. Verifique seu e-mail ou telefone.');
+        // Usuário não confirmado, abre modal de confirmação
+        setEmailParaConfirmar(email);
+        setShowConfirmacao(true);
+        setMensagem('Usuário não confirmado. Informe o código de verificação.');
       } else if (err.code === 'NotAuthorizedException') {
         setMensagem('E-mail ou senha inválidos.');
       } else if (err.code === 'UserNotFoundException') {
@@ -56,6 +63,37 @@ function Login({ onOpenEsqueciSenha, onClose }) {
       <div className="d-flex justify-content-between mt-3">
         <a href="#" className="link-secondary small" onClick={e => { e.preventDefault(); if (onOpenEsqueciSenha) { onOpenEsqueciSenha(); } }}>Esqueci minha senha</a>
       </div>
+      {showConfirmacao && (
+        <div className="modal fade show" style={{display: 'block', background: 'rgba(0,0,0,0.5)'}} tabIndex="-1">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Confirmação de Cadastro</h5>
+                <button type="button" className="btn-close" onClick={() => setShowConfirmacao(false)}></button>
+              </div>
+              <div className="modal-body">
+                <ConfirmacaoUsuario
+                  email={emailParaConfirmar}
+                  onConfirmado={async () => {
+                    setShowConfirmacao(false);
+                    setMensagem('Usuário confirmado!');
+                    setErro(false);
+                    // Tenta login novamente após confirmação
+                    try {
+                      await signIn({ username: emailParaConfirmar, password: senha });
+                      navigate('/dashboard');
+                    } catch (err) {
+                      setMensagem('Erro ao logar após confirmação: ' + (err.message || 'Erro desconhecido.'));
+                      setErro(true);
+                    }
+                  }}
+                  onClose={() => setShowConfirmacao(false)}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -8,6 +8,7 @@ import Home from './paginas/Home';
 import Login from './paginas/Login';
 import Cadastro from './paginas/Cadastro';
 import EsqueciSenha from './paginas/EsqueciSenha';
+import Dashboard from './paginas/Dashboard';
 
 
 function App() {
@@ -46,17 +47,7 @@ function App() {
               <EsqueciSenha />
             </div>
           </>} />
-          {/* Exemplo de rota protegida: */}
-          {/* <Route path="/protegido" element={
-            <Authenticator>
-              {({ signOut, user }) => (
-                <div>
-                  <h2>Área Protegida</h2>
-                  <button onClick={signOut}>Sair</button>
-                </div>
-              )}
-            </Authenticator>
-          } /> */}
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
         {/* O botão de teste protegido pode ser removido ou movido para rotas protegidas */}
       </Router>

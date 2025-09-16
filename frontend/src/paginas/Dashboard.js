@@ -1,7 +1,9 @@
 import React from 'react';
 import { signOut } from '@aws-amplify/auth';
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
+  const navigate = useNavigate();
   return (
     <div className="dashboard-bg min-vh-100 d-flex">
       {/* Sidebar */}
@@ -12,7 +14,7 @@ function Dashboard() {
           <a href="#testes" className="nav-link text-white">Testes FDT</a>
           <a href="#relatorios" className="nav-link text-white">Relatórios</a>
           <a href="#seguranca" className="nav-link text-white">Segurança</a>
-          <button className="nav-link text-white mt-4 btn btn-link" style={{textAlign: 'left'}} onClick={async () => { await signOut(); window.location.reload(); }}>Sair</button>
+          <button className="nav-link text-white mt-4 btn btn-link" style={{textAlign: 'left'}} onClick={async () => { await signOut(); navigate('/'); }}>Sair</button>
         </nav>
       </aside>
       {/* Main Content */}

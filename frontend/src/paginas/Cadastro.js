@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../temas/tema.css';
 import { signUp } from '@aws-amplify/auth';
+import ConfirmacaoUsuario from './ConfirmacaoUsuario';
 
 function Cadastro() {
   // Validação de senha forte
@@ -16,6 +17,8 @@ function Cadastro() {
   const [senha, setSenha] = useState('');
   const [mensagem, setMensagem] = useState('');
   const [erro, setErro] = useState(false);
+  const [showConfirmacao, setShowConfirmacao] = useState(false);
+  const [emailParaConfirmar, setEmailParaConfirmar] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,11 +69,13 @@ function Cadastro() {
         },
       });
       
-      setMensagem('Usuário cadastrado com sucesso! Verifique seu e-mail para confirmação.');
-      setNome(''); 
-      setSobrenome(''); 
-      setEmail(''); 
-      setSenha('');
+  setMensagem('Usuário cadastrado com sucesso! Verifique seu e-mail para confirmação.');
+  setEmailParaConfirmar(email);
+  setShowConfirmacao(true);
+  setNome(''); 
+  setSobrenome(''); 
+  setEmail(''); 
+  setSenha('');
     } catch (err) {
       console.error('Erro detalhado no cadastro:', err);
       console.error('Erro name:', err.name);
@@ -165,7 +170,26 @@ function Cadastro() {
         <div className={`alert mt-3 ${erro ? 'alert-danger' : 'alert-success'}`}>
           {mensagem}
         </div>
-      )}      
+      )}
+      {showConfirmacao && (
+        <div className="modal fade show" style={{display: 'block', background: 'rgba(0,0,0,0.5)'}} tabIndex="-1">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Confirmação de Cadastro</h5>
+                <button type="button" className="btn-close" onClick={() => setShowConfirmacao(false)}></button>
+              </div>
+              <div className="modal-body">
+                <ConfirmacaoUsuario
+                  email={emailParaConfirmar}
+                  onConfirmado={() => { setShowConfirmacao(false); setMensagem('Cadastro confirmado!'); setErro(false); }}
+                  onClose={() => setShowConfirmacao(false)}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
