@@ -14,10 +14,10 @@ export async function getProtegido(token, rota = '/protegido/teste') {
   return resposta;
 }
 // src/servicos/api.js
-// Serviço centralizado para chamadas HTTP ao backend Java Spring Boot
-// Altere a URL base conforme o ambiente (desenvolvimento/produção)
+// Serviço centralizado para chamadas HTTP ao backend via API Gateway + Lambda
+// URL do API Gateway criado na infraestrutura AWS
 
-const API_BASE = 'http://equilibrio-cognitivo-dev.us-east-1.elasticbeanstalk.com/api';
+const API_BASE = 'https://1opy3dfaq0.execute-api.us-east-1.amazonaws.com/prod';
 
 /**
  * Faz uma requisição POST para o endpoint de cadastro de usuário.
